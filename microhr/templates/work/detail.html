@@ -32,9 +32,24 @@
 <div>
     {% if user.is_authenticated and user.is_company and user == work.company %}
     <a class="btn btn-primary" href="{% url 'work_edit' work.id %}">編集する</a>
-    <a class="btn btn-primary" href="{% url 'work_delete' work.id %}">削除する</a>
+    <form method="post" action="{% url 'work_delete' work.id %}">
+        {% csrf_token %}
+        <button type="submit" name="delete_button" class="btn btn-primary" id="btn_del">削除する</button>
+    </form>
     {% elif not user.is_company %}
     <a class="btn btn-primary">応募する</a>
     {% endif %}
 </div>
+<script>
+    $(function(){
+        $("#btn_del").click(function(){
+            if(confirm("削除しますか？")){
+                //yesなら削除する
+            }else{
+                //cancelなら削除しない
+                return false;
+            }
+        });
+    })
+</script>
 {% endblock %}
