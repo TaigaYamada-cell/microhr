@@ -1,9 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
-from microhr.forms import WorkerProfileForm
+from microhr.forms import WorkerProfileForm, WorkForm
 from microhr.decorators import worker_required
 from logging import getLogger
+
+from microhr.models import Work
+
 logger = getLogger(__name__)
 
 
@@ -30,10 +33,10 @@ def apply(request, work_id):
     """求人へ応募する（未実装）"""
     logger.warn("unimplemented")
 
+    work = get_object_or_404(Work, pk=work_id)
     # そもそもこのPOSTかGETの条件分岐を毎回描かないといけないのはどうにかならないのか？
     # デコレーターとかを上手く使えないのか…？
     if request.method == 'POST':
-        # 多分ここに応募URLにPOSTされたときの処理を書かないといけない
         pass
     else:
         # それ以外の時は多分ここに何かを書かなければいけない
