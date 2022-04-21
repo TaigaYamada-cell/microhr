@@ -4,8 +4,10 @@ from django.http import HttpResponse
 from microhr.forms import WorkerProfileForm, WorkForm
 from microhr.decorators import worker_required
 from logging import getLogger
+from django.views.decorators.http import require_POST, require_GET
 
-from microhr.models import Work, Application
+
+from microhr.models import Application
 
 logger = getLogger(__name__)
 
@@ -29,27 +31,21 @@ def resume(request):
 
 @login_required
 @worker_required
+@require_POST
 def apply(request, work_id):
-    """求人へ応募する（未実装）"""
-    logger.warn("unimplemented")
-
-    work = get_object_or_404(Work, pk=work_id)
-    # そもそもこのPOSTかGETの条件分岐を毎回描かないといけないのはどうにかならないのか？
-    # デコレーターとかを上手く使えないのか…？
-    if request.method == 'POST':
-        Application.objects.create(user_id = request.user.id, work_id = work_id)
-        return redirect(applied_items)
-    else:
-        # それ以外の時は多分ここに何かを書かなければいけない
-        # form = ApplyForm()
-        pass
-
-    # 本当はこんな感じになるような気がする
-    # return render(request, 'work/apply.html', {'form': form})
-    return redirect('home')
-
-
+     
+    """応募済みでないか確認"""
+    check = Application.objects.filter(user_id = request.user.id, work_id = work_id)
+    if check:
+        return redirect('home')
+    """求人へ応募する"""  
+    Application.objects.create(user_id = request.user.id, work_id = work_id)
+    return redirect(applied_items)
+ 
+    
 @login_required
 @worker_required
-def applied_items(request):
-    return HttpResponse("applied items!")
+def applied_items(request):   
+    applications = Application.objects.select_related('work').filter(user_id=request.user.id)
+    context = {"applications": applications}
+    return render(request, "work/items.html", context)
