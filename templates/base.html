@@ -20,7 +20,7 @@
                 {% endif %}
                 {% if user.is_authenticated and user.is_worker %}
                 <a href="{% url 'resume' %}" class="navbar-brand">履歴書編集</a>
-                <a href="/" class="navbar-brand">応募一覧</a>
+                <a href="{% url 'applied_items' %}" class="navbar-brand">応募一覧</a>
                 {% endif %}
 
                 <ul class="navbar-nav mr-md-2">

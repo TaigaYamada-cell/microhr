@@ -38,7 +38,7 @@ def apply(request, work_id):
     # デコレーターとかを上手く使えないのか…？
     if request.method == 'POST':
         Application.objects.create(user_id = request.user.id, work_id = work_id)
-        
+        return redirect(applied_items)
     else:
         # それ以外の時は多分ここに何かを書かなければいけない
         # form = ApplyForm()
@@ -46,4 +46,10 @@ def apply(request, work_id):
 
     # 本当はこんな感じになるような気がする
     # return render(request, 'work/apply.html', {'form': form})
-    return HttpResponse("apply work")
+    return redirect('home')
+
+
+@login_required
+@worker_required
+def applied_items(request):
+    return HttpResponse("applied items!")

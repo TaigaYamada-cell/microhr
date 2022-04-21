@@ -17,3 +17,11 @@ class Work(models.Model):
 
     def __str__(self):
         return self.title
+
+class Application(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    work = models.ForeignKey(Work,
+                                on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_passed = models.BooleanField(null=True, help_text='合格ならTrue')
