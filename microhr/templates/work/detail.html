@@ -43,9 +43,7 @@
 <script>
     $(function(){
         $("#btn_del").click(function(){
-            if(confirm("削除しますか？")){
-                //yesなら削除する
-            }else{
+            if(!confirm("削除しますか？")){
                 //cancelなら削除しない
                 return false;
             }
