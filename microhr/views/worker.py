@@ -5,7 +5,7 @@ from microhr.forms import WorkerProfileForm, WorkForm
 from microhr.decorators import worker_required
 from logging import getLogger
 
-from microhr.models import Work
+from microhr.models import Work, Application
 
 logger = getLogger(__name__)
 
@@ -37,7 +37,8 @@ def apply(request, work_id):
     # そもそもこのPOSTかGETの条件分岐を毎回描かないといけないのはどうにかならないのか？
     # デコレーターとかを上手く使えないのか…？
     if request.method == 'POST':
-        pass
+        Application.objects.create(user_id = request.user.id, work_id = work_id)
+        
     else:
         # それ以外の時は多分ここに何かを書かなければいけない
         # form = ApplyForm()
