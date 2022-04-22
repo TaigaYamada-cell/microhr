@@ -6,6 +6,8 @@ from microhr.models import Work
 from microhr.forms import WorkForm
 from microhr.decorators import company_required
 from logging import getLogger
+
+from microhr.views.root import home
 logger = getLogger(__name__)
 
 
@@ -54,5 +56,14 @@ def work_edit(request, work_id):
 @login_required
 @company_required
 def work_delete(request, work_id):
-    """求人を削除する（未実装）"""
-    return HttpResponse("delete work")
+    """求人を削除する"""
+    work = get_object_or_404(Work, pk=work_id)
+    if work.company_id != request.user.id:
+        return HttpResponseForbidden("この求人は削除できません")
+        
+    if request.method == 'POST':
+        work = get_object_or_404(Work, pk=work_id)
+        work.delete()
+        return redirect(home)
+    else:
+        return redirect(home)
