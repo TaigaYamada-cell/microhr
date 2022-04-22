@@ -14,10 +14,10 @@
     <tbody>
     {% for application in applications %}
         <tr>
-            <th>{{ application.work.title }}</th>
-            <th>{{ application.work.company }}</th>
-            <th>{{ application.work.salary_min }}万円～{{ application.work.salary_max }}万円</th>
-            <th>
+            <td>{{ application.work.title }}</td>
+            <td>{{ application.work.company }}</td>
+            <td>{{ application.work.salary_min }}万円～{{ application.work.salary_max }}万円</td>
+            <td>
                 {% if application.is_passed == null %}
                 結果をお待ちください。
                 {% elif application.is_passed == True %}
@@ -25,7 +25,7 @@
                 {% else %}
                 落選
                 {% endif %}
-            </th>
+            </td>
         </tr>
     {% endfor %} 
     </tbody>

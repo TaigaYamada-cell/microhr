@@ -35,14 +35,14 @@ def resume(request):
 def apply(request, work_id):
      
     """応募済みでないか確認"""
-    check = Application.objects.filter(user_id = request.user.id, work_id = work_id)
+    check = Application.objects.filter(user_id = request.user.id, work_id = work_id).exists()
     if check:
         return redirect('home')
     """求人へ応募する"""  
     Application.objects.create(user_id = request.user.id, work_id = work_id)
     return redirect(applied_items)
- 
-    
+
+
 @login_required
 @worker_required
 def applied_items(request):   
