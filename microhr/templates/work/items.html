@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1>応募一覧</h1>
+{% if applications %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>会社名</th>
+            <th>給料</th>
+            <th>合否</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for application in applications %}
+        <tr>
+            <td>{{ application.work.title }}</td>
+            <td>{{ application.work.company }}</td>
+            <td>{{ application.work.salary_min }}万円～{{ application.work.salary_max }}万円</td>
+            <td>
+                {% if application.is_passed == null %}
+                結果をお待ちください。
+                {% elif application.is_passed == True %}
+                合格
+                {% else %}
+                落選
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %} 
+    </tbody>
+</table>
+{% else %}
+応募企業はありません。
+{% endif %}
+{% endblock %}

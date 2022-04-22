@@ -37,17 +37,27 @@
         <button type="submit" name="delete_button" class="btn btn-primary" id="btn_del">削除する</button>
     </form>
     {% elif not user.is_company %}
-    <a class="btn btn-primary">応募する</a>
+    <form method="post" action="{%url 'work_apply' work.id %}" style="display:inline;">
+    {% csrf_token %}
+        <button type="submit" name="apply_button" class="btn btn-primary" id="btn_apply">応募する</a>
+    </form>        
     {% endif %}
-</div>
+
 <script>
-    $(function(){
+
+        $("#btn_apply").click(function(){
+            if(!confirm("応募しますか？")){
+                //cancelなら応募しない
+                return false
+            }
+        });
+  
         $("#btn_del").click(function(){
             if(!confirm("削除しますか？")){
                 //cancelなら削除しない
                 return false;
             }
         });
-    })
+    
 </script>
 {% endblock %}
