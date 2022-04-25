@@ -7,11 +7,11 @@
 <p>{{ applicant.workerprofile.self_pr }}</p>
     {% if status == "None" %}
         <p>現在のステータス：<strong>選考中</strong></p>
-        {% elif status == "True" %}
+    {% elif status == "True" %}
         <p>現在のステータス：<strong>合格</strong></p>
-        {% elif status == "False" %}
+    {% elif status == "False" %}
         <p>現在のステータス：<strong>不合格</strong></p>
-        {% endif %}
+    {% endif %}
 
 <form action="{% url 'check_application' %}" method="post">
 {% csrf_token %}
