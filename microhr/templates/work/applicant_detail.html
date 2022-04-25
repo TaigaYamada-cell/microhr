@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block main %}
-<h1 class="mb-5">{{ applicant.name }}の履歴書</h1>
+<h1 class="mb-5">{{ applicant.user.name }}の履歴書</h1>
 <h5>経歴</h5>
-<p>{{ applicant.workerprofile.resume }}</p>
+<p>{{ applicant.user.workerprofile.resume }}</p>
 <h5>自己ＰＲ</h5>
-<p>{{ applicant.workerprofile.self_pr }}</p>
-    {% if status == "None" %}
+<p>{{ applicant.user.workerprofile.self_pr }}</p>
+    {% if applicant.is_passed is None %}
         <p>現在のステータス：<strong>選考中</strong></p>
-    {% elif status == "True" %}
+    {% elif applicant.is_passed %}
         <p>現在のステータス：<strong>合格</strong></p>
     {% else %}
         <p>現在のステータス：<strong>不合格</strong></p>

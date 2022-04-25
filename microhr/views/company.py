@@ -83,6 +83,6 @@ def check_application(request):
 
 @login_required
 @company_required
-def applicant_detail(request, user_id, status):
-    applicant = User.objects.get(id=user_id)
-    return render(request, 'work/applicant_detail.html', {'applicant': applicant, 'status': status})
+def applicant_detail(request, application_id):
+    applicant = Application.objects.get(id=application_id)
+    return render(request, 'work/applicant_detail.html', {'applicant': applicant})

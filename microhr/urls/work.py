@@ -12,5 +12,5 @@ urlpatterns = [
     path('<int:work_id>/apply', worker.apply, name="work_apply"),
     path('applied_items/', worker.applied_items, name='applied_items'),
     path('select/', company.check_application, name='check_application'),
-    path('<int:user_id>/<str:status>/detail', company.applicant_detail, name='applicant_detail'),
+    path('<int:application_id>/detail', company.applicant_detail, name='applicant_detail'),
 ]

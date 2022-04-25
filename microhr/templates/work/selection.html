@@ -18,7 +18,7 @@
             <ul class="listgroup list-group-flush">
                 {% for a in applications %}                    
                   <li class="list-group-item">
-                    <a href="{% url 'applicant_detail' a.user.id a.is_passed %}" class="me-5">{{ a.user }}</a>
+                    <a href="{% url 'applicant_detail' a.id %}" class="me-5">{{ a.user }}</a>
                 {% if a.is_passed is None %}
                 選考中
                 {% elif a.is_passed == True %}
