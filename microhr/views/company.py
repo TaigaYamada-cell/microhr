@@ -4,6 +4,7 @@ from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from microhr.models import Work, Application
+from accounts.models import User
 from microhr.forms import WorkForm
 from microhr.decorators import company_required
 from logging import getLogger
@@ -72,7 +73,16 @@ def work_delete(request, work_id):
 @login_required
 @company_required
 def check_application(request):
-    company_id = request.user.id
-    works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
+    if request.method == 'GET':
+        company_id = request.user.id
+        works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
+        return render(request, 'work/selection.html', {'works': works})
+    else:
+        """POSTの時、is_passedを変更する（未実装）"""
+        return HttpResponse(request.POST.get('judge', None))
 
-    return render(request, 'work/selection.html', {'works': works})
+@login_required
+@company_required
+def applicant_detail(request, user_id, status):
+    applicant = User.objects.get(id=user_id)
+    return render(request, 'work/applicant_detail.html', {'applicant': applicant, 'status': status})
