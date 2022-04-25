@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1 class="mb-5">選考</h1>
+{% if works %}    
+    
+<div class="accordion accordion-flush" id="accordion">
+    {% for work in works %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+          <h5>{{ work.title }}</h5>
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordion">
+        <div class="accordion-body">
+          <h6>応募者</h6>
+            {% with applications=work.application_set.all %}
+            <ul class="listgroup list-group-flush">
+                {% for a in applications %}                    
+                  <li class="list-group-item">
+                    <a href="{% url 'applicant_detail' a.id %}" class="me-5">{{ a.user }}</a>
+                {% if a.is_passed is None %}
+                選考中
+                {% elif a.is_passed == True %}
+                合格
+                {% else %}
+                落選
+                {% endif %}
+                  </li>                                            
+                {% endfor %}
+              </ul> 
+            {% endwith %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+応募者はいません。
+{% endif %}
+{% endblock %}
