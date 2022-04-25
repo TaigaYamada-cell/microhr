@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
 {% block main %}
-
+<h1 class="mb-5">選考</h1>
 {% if works %}    
     
-<div class="accordion" id="accordion">
+<div class="accordion accordion-flush" id="accordion">
     {% for work in works %}
     <div class="accordion-item">
       <h2 class="accordion-header" id="heading{{ forloop.counter }}">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
-          {{ work.title }}
+          <h5>{{ work.title }}</h5>
         </button>
       </h2>
       <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordion">
         <div class="accordion-body">
+          <h6>応募者</h6>
             {% with applications=work.application_set.all %}
-                {% for a in applications %}
-                    <p>{{ a.user }}</p>
+            <ul class="listgroup list-group-flush">
+                {% for a in applications %}                    
+                  <li class="list-group-item">
+                    <a href="">{{ a.user }}</a>
+                  </li>                                            
                 {% endfor %}
+              </ul> 
             {% endwith %}
         </div>
       </div>
