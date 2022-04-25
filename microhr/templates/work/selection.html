@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block main %}
+
+{% if works %}    
+    
+<div class="accordion" id="accordion">
+    {% for work in works %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+          {{ work.title }}
+        </button>
+      </h2>
+      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordion">
+        <div class="accordion-body">
+            {% with applications=work.application_set.all %}
+                {% for a in applications %}
+                    <p>{{ a.user }}</p>
+                {% endfor %}
+            {% endwith %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+応募者はいません。
+{% endif %}
+{% endblock %}

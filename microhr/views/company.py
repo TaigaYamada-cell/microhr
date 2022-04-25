@@ -1,8 +1,9 @@
+from tkinter import W
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
-from microhr.models import Work
+from microhr.models import Work, Application
 from microhr.forms import WorkForm
 from microhr.decorators import company_required
 from logging import getLogger
@@ -67,3 +68,11 @@ def work_delete(request, work_id):
         return redirect(home)
     else:
         return redirect(home)
+
+@login_required
+@company_required
+def check_application(request):
+    company_id = request.user.id
+    works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
+
+    return render(request, 'work/selection.html', {'works': works})
