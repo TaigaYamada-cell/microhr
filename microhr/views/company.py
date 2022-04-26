@@ -73,11 +73,11 @@ def work_delete(request, work_id):
 @login_required
 @company_required
 def check_application(request):
-        """選考ページにて企業の求人と紐づく応募者を表示"""
-        if request.method == 'GET':
-            company_id = request.user.id
-            works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
-            return render(request, 'work/selection.html', {'works': works})
+    """選考ページにて企業の求人と紐づく応募者を表示"""
+    if request.method == 'GET':
+        company_id = request.user.id
+        works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
+        return render(request, 'work/selection.html', {'works': works})
     
 
 @login_required
