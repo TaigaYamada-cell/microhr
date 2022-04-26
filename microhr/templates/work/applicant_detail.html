@@ -13,7 +13,7 @@
         <p>現在のステータス：<strong>不合格</strong></p>
     {% endif %}
 
-<form action="{% url 'check_application' %}" method="post">
+<form action="{% url 'applicant_detail' applicant.id %}" method="post">
 {% csrf_token %}
     <input type="radio" id="passed" name="judge" value="True">
     <label for="passed">合格</label>
