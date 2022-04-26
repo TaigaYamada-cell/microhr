@@ -18,6 +18,7 @@ class WorkForm(forms.ModelForm):
     salary_min = forms.IntegerField(
         label='給与下限(万円)',
         required=True,
+        #将来的には、勤務地に応じて最低賃金のvalidationを変更する仕組みを作りたい
         min_value=13,
         help_text='必須',
         )
