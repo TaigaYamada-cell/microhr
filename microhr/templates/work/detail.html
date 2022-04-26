@@ -44,7 +44,7 @@
     {% endif %}
 
 <script>
-
+    $(function () {
         $("#btn_apply").click(function(){
             if(!confirm("応募しますか？")){
                 //cancelなら応募しない
@@ -58,6 +58,7 @@
                 return false;
             }
         });
+    });
     
 </script>
 {% endblock %}
