@@ -26,8 +26,14 @@ class WorkCreateViewTests(TestCase):
         response = company.work_new(request)
         self.assertIsInstance(response, HttpResponseRedirect)
 
-    # def test_should_return_400_if_sending_empty_post_request(self):
-    #     request = self.factory.post("/endpoint/of/work_new", data={})
-    #     request.user = self.user
-    #     response = company.work_new(request)
-    #     self.assertEqual(response.status_code, 400)
+    def test_should_return_201_if_sending_valid_post_request(self):
+        request = self.factory.post("/endpoint/of/work_new", data={
+            'title': 'test, test, test!',
+            'company': self.user,
+            'salary_max': 15,
+            'salary_min': 10,
+            'text': 'テストの求人',
+        })
+        request.user = self.user
+        response = company.work_new(request)
+        self.assertEqual(response.status_code, 302)
