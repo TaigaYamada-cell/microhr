@@ -26,7 +26,7 @@ class WorkCreateViewTests(TestCase):
         response = company.work_new(request)
         self.assertIsInstance(response, HttpResponseRedirect)
 
-    def test_should_return_201_if_sending_valid_post_request(self):
+    def test_should_return_302_if_sending_valid_post_request(self):
         request = self.factory.post("/endpoint/of/work_new", data={
             'title': 'test, test, test!',
             'company': self.user,
