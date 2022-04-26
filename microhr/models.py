@@ -26,3 +26,12 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_passed = models.BooleanField(null=True, help_text='合格ならTrue')
+
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    work = models.ForeignKey(Work,
+                                on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
