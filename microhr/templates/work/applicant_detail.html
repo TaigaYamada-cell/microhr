@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% block main %}
-<h1 class="mb-5">{{ applicant.user.name }}の履歴書</h1>
+<h1 class="mb-5">{{ application.user.name }}の履歴書</h1>
 <h5>経歴</h5>
-<p>{{ applicant.user.workerprofile.resume }}</p>
+<p>{{ application.user.workerprofile.resume }}</p>
 <h5>自己ＰＲ</h5>
-<p>{{ applicant.user.workerprofile.self_pr }}</p>
-    {% if applicant.is_passed is None %}
+<p>{{ application.user.workerprofile.self_pr }}</p>
+    {% if application.is_passed is None %}
         <p>現在のステータス：<strong>選考中</strong></p>
-    {% elif applicant.is_passed %}
+    {% elif application.is_passed %}
         <p>現在のステータス：<strong>合格</strong></p>
     {% else %}
         <p>現在のステータス：<strong>不合格</strong></p>
     {% endif %}
 
-<form action="{% url 'applicant_detail' applicant.id %}" method="post">
+<form action="{% url 'application_detail' application.id %}" method="post">
 {% csrf_token %}
     <input type="radio" id="passed" name="judge" value="True">
     <label for="passed">合格</label>

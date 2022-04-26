@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
-from pyparsing import null_debug_action
 from microhr.models import Work, Application
 from accounts.models import User
 from microhr.forms import WorkForm
@@ -74,27 +73,30 @@ def work_delete(request, work_id):
 @login_required
 @company_required
 def check_application(request):
-        company_id = request.user.id
-        works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
-        return render(request, 'work/selection.html', {'works': works})
+        """選考ページにて企業の求人と紐づく応募者を表示"""
+        if request.method == 'GET':
+            company_id = request.user.id
+            works = Work.objects.prefetch_related('application_set').filter(company_id=company_id)
+            return render(request, 'work/selection.html', {'works': works})
     
 
 @login_required
 @company_required
-def applicant_detail(request, application_id):
+def application_detail(request, application_id):
+    """応募の詳細と合否を判定する"""
     if request.method == 'GET':
-        applicant = Application.objects.get(id=application_id)
-        return render(request, 'work/applicant_detail.html', {'applicant': applicant})
+        application = Application.objects.get(id=application_id)
+        return render(request, 'work/applicant_detail.html', {'application': application})
     else:
-        """POSTの時、選考状況を更新する"""
+        #POSTの時、選考状況を更新する
         judge = request.POST.get('judge', None)
-        a = Application.objects.get(id=application_id)
+        application = Application.objects.get(id=application_id)
         if judge == "None": 
-            a.is_passed = None
+            application.is_passed = None
         elif judge == "True":
-            a.is_passed = True
+            application.is_passed = True
         else:
-            a.is_passed = False
-        a.save()
+            application.is_passed = False
+        application.save()
 
-        return render(request, 'work/applicant_detail.html', {'applicant': a})
+        return render(request, 'work/applicant_detail.html', {'application': application})
