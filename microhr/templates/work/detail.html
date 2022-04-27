@@ -41,6 +41,10 @@
     {% csrf_token %}
         <button type="submit" name="apply_button" class="btn btn-primary" id="btn_apply">応募する</a>
     </form>        
+    <form method="post" action="" style="display: inline;">
+    {% csrf_token %}
+        <button type="submit" name="fav_button" class="btn btn-secondary ms-2">気になる</button>
+    </form>
     {% endif %}
 
 <script>
