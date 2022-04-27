@@ -42,13 +42,17 @@
         <button type="submit" name="apply_button" class="btn btn-primary" id="btn_apply">応募する</a>
     </form>        
     {% endif %}
+    
 
 <script>
     $(function () {
+
         $("#btn_apply").click(function(){
             if(!confirm("応募しますか？")){
                 //cancelなら応募しない
-                return false
+                return false;                
+            }else{
+                alert('応募完了後、応募一覧に移動します')         
             }
         });
   
@@ -56,9 +60,10 @@
             if(!confirm("削除しますか？")){
                 //cancelなら削除しない
                 return false;
+            }else{
+                alert('削除完了後、HOMEに移動します')
             }
         });
     });
-    
 </script>
 {% endblock %}
