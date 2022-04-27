@@ -61,7 +61,9 @@ def favorite(request):
 @login_required
 @worker_required
 @require_POST    
+
 def favorite_delete(request, favorite_id):
+    """気になるを削除"""
     favorite = Favorite.objects.get(id=favorite_id)
     favorite.delete()
 

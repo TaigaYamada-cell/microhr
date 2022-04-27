@@ -111,6 +111,7 @@ def application_detail(request, application_id):
 @login_required
 @company_required
 def favorite(request, worker_id):
+    """気になる求職者を登録"""
     company = User.objects.get(id=request.user.id)
     worker = User.objects.get(id=worker_id)
 
@@ -120,3 +121,20 @@ def favorite(request, worker_id):
     works = Work.objects.all()
 
     return render(request, "home.html", {'works': works})
+
+@login_required
+@company_required
+def favorite_worker(request):
+    """気になる求職者を表示"""
+    favoriteworkers = CompanyFavorite.objects.filter(company=request.user.id)
+    return render(request, "work/favorite_worker.html", {'favoriteworkers': favoriteworkers})
+
+@login_required
+@company_required
+def favorite_worker_delete(request, favorite_worker_id):
+    """気になるを削除"""
+    favoriteworker = CompanyFavorite.objects.get(id=favorite_worker_id)
+    favoriteworker.delete()
+
+    favoriteworkers = CompanyFavorite.objects.filter(company=request.user.id)
+    return render(request, "work/favorite_worker.html", {'favoriteworkers': favoriteworkers})

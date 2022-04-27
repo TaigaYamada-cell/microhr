@@ -17,6 +17,7 @@
                 {% if user.is_authenticated and user.is_company %}
                 <a href="{% url 'work_new' %}" class="navbar-brand">求人登録</a>
                 <a href="{% url 'check_application' %}" class="navbar-brand">選考</a>
+                <a href="{% url 'favorite_worker' %}" class="navbar-brand">気になる</a>
                 {% endif %}
                 {% if user.is_authenticated and user.is_worker %}
                 <a href="{% url 'resume' %}" class="navbar-brand">履歴書編集</a>
