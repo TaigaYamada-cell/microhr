@@ -31,18 +31,18 @@
     <div class="col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">だいこんがり</h5>
-          <p class="card-text">みんなで仲良くだいこんがりをします。大根おろしのまかないがあります。</p>
-          <a href="{% url 'work_detail' 15 %}" class="btn btn-primary">求人応募画面へ</a>
+          <h5 class="card-title">{{ works.1.title }}</h5>
+          <p class="card-text">{{ works.1.text }}</p>
+          <a href="{% url 'work_detail' works.1.id %}" class="btn btn-primary">求人応募画面へ</a>
         </div>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">にんじんがり</h5>
-          <p class="card-text">お給料に加えて人参の支給もあります。ベータカロテン！！</p>
-          <a href="{% url 'work_detail' 16 %}" class="btn btn-primary">求人応募画面へ</a>
+          <h5 class="card-title">{{ works.2.title }}</h5>
+          <p class="card-text">{{ works.2.text }}</p>
+          <a href="{% url 'work_detail' works.2.id %}" class="btn btn-primary">求人応募画面へ</a>
         </div> 
       </div>
     </div>
