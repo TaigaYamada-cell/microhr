@@ -7,7 +7,7 @@ from logging import getLogger
 from django.views.decorators.http import require_POST, require_GET
 
 
-from microhr.models import Application
+from microhr.models import Application, Favorite
 
 logger = getLogger(__name__)
 
@@ -49,3 +49,21 @@ def applied_items(request):
     applications = Application.objects.select_related('work').filter(user_id=request.user.id)
     context = {"applications": applications}
     return render(request, "work/items.html", context)
+
+@login_required
+@worker_required
+def favorite(request):
+    """お気に入りの閲覧"""
+    if request.method == 'GET':
+        favorites = Favorite.objects.filter(user_id=request.user.id)
+        return render(request, "work/favorite.html", {'favorites': favorites})
+
+@login_required
+@worker_required
+@require_POST    
+def favorite_delete(request, favorite_id):
+    favorite = Favorite.objects.get(id=favorite_id)
+    favorite.delete()
+
+    favorites = Favorite.objects.filter(user_id=request.user.id)
+    return render(request, "work/favorite.html", {'favorites': favorites}) 

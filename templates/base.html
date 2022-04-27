@@ -21,6 +21,7 @@
                 {% if user.is_authenticated and user.is_worker %}
                 <a href="{% url 'resume' %}" class="navbar-brand">履歴書編集</a>
                 <a href="{% url 'applied_items' %}" class="navbar-brand">応募一覧</a>
+                <a href="{% url 'favorite' %}" class="navbar-brand">気になる</a>
                 {% endif %}
 
                 <ul class="navbar-nav mr-md-2">
