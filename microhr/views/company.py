@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
-from microhr.models import Work, Application, Favorite
+from microhr.models import CompanyFavorite, Work, Application, Favorite
 from accounts.models import User
 from microhr.forms import WorkForm
 from microhr.decorators import company_required
@@ -107,3 +107,16 @@ def application_detail(request, application_id):
         application.save()
 
         return render(request, 'work/applicant_detail.html', {'application': application})
+
+@login_required
+@company_required
+def favorite(request, worker_id):
+    company = User.objects.get(id=request.user.id)
+    worker = User.objects.get(id=worker_id)
+
+    companyfavorite = CompanyFavorite.objects.create(company=company, worker=worker)
+    companyfavorite.save()
+
+    works = Work.objects.all()
+
+    return render(request, "home.html", {'works': works})

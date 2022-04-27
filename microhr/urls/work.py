@@ -15,4 +15,5 @@ urlpatterns = [
     path('<int:application_id>/detail', company.application_detail, name='application_detail'),
     path('favorite/', worker.favorite, name="favorite"),
     path('favorite/<int:favorite_id>/', worker.favorite_delete, name='favorite_delete'),
+    path('favorite_worker/<int:worker_id>', company.favorite, name="favorite_worker"),
 ]
