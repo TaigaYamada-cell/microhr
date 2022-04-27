@@ -25,6 +25,28 @@
     {% endfor %}
     </tbody>
 </table>
+<!-- 現状は手動で登録します -->
+<h4>おすすめ求人</h4>
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ works.1.title }}</h5>
+          <p class="card-text">{{ works.1.text }}</p>
+          <a href="{% url 'work_detail' works.1.id %}" class="btn btn-primary">求人応募画面へ</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ works.2.title }}</h5>
+          <p class="card-text">{{ works.2.text }}</p>
+          <a href="{% url 'work_detail' works.2.id %}" class="btn btn-primary">求人応募画面へ</a>
+        </div> 
+      </div>
+    </div>
+  </div>
 {% else %}
 求人は登録されていません。
 {% endif%}
