@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1 class="mb-5">気になる一覧</h1>
+{% for favorite in favorites %}
+    <p>企業名：<strong>{{ favorite.work.company }}</strong></p>
+    <p>{{ favorite.work }}</p>
+{% endfor %}
+{% endblock %}
