@@ -26,4 +26,8 @@
     
     <button type="submit" class="btn btn-primary">変更する</button>
 </form>
+<form action="{% url 'favorite_worker' application.user.id %}" method="post">
+{% csrf_token %}
+    <button type="submit" class="btn btn-primary">気になる</button>
+</form>
 {% endblock %}

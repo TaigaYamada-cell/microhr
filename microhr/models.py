@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from accounts.models import User
+
 # Create your models here.
 
 
@@ -26,3 +28,22 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_passed = models.BooleanField(null=True, help_text='合格ならTrue')
+
+class Favorite(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE)
+    work = models.ForeignKey(Work,
+                                on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+class CompanyFavorite(models.Model):
+    company = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE
+                                )
+    worker = models.ForeignKey(User,
+                                on_delete=models.CASCADE,
+                                related_name="favorite_worker"
+                                )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)                            

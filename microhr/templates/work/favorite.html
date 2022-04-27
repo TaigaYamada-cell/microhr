@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1 class="mb-5">気になる一覧</h1>
+{% for favorite in favorites %}
+    <p>企業名：<strong>{{ favorite.work.company }}</strong></p>
+    <a href="{% url 'work_detail' favorite.work.id %}">{{ favorite.work }}</a>
+    <form method="post" action="{% url 'favorite_delete' favorite.id %}" class="mt-3">
+    {% csrf_token %}
+        <button type="submit" class="btn btn-primary">気になるを削除する</button>
+    </form>
+{% endfor %}
+{% endblock %}

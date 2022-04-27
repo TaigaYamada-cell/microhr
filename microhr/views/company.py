@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
-from microhr.models import Work, Application
+from microhr.models import CompanyFavorite, Work, Application, Favorite
 from accounts.models import User
 from microhr.forms import WorkForm
 from microhr.decorators import company_required
@@ -30,10 +30,17 @@ def work_new(request):
 
 
 def work_detail(request, work_id):
-    """求人を詳細表示する"""
-    logger.debug("show work detail")
-    work = get_object_or_404(Work, pk=work_id)
-    return render(request, 'work/detail.html', {'work': work})
+    """求人を詳細表示する,postの時気になる登録する"""
+    if request.method == 'GET':
+        work = get_object_or_404(Work, pk=work_id)
+        return render(request, 'work/detail.html', {'work': work})
+    else:
+        #気になるを登録する
+        user = User.objects.get(id=request.user.id)
+        work = Work.objects.get(id=work_id)
+        favorite = Favorite.objects.create(user=user, work=work)
+        favorite.save()
+        return render(request, 'work/detail.html', {'work': work})
 
 
 @login_required
@@ -100,3 +107,34 @@ def application_detail(request, application_id):
         application.save()
 
         return render(request, 'work/applicant_detail.html', {'application': application})
+
+@login_required
+@company_required
+def favorite(request, worker_id):
+    """気になる求職者を登録"""
+    company = User.objects.get(id=request.user.id)
+    worker = User.objects.get(id=worker_id)
+
+    companyfavorite = CompanyFavorite.objects.create(company=company, worker=worker)
+    companyfavorite.save()
+
+    works = Work.objects.all()
+
+    return render(request, "home.html", {'works': works})
+
+@login_required
+@company_required
+def favorite_worker(request):
+    """気になる求職者を表示"""
+    favoriteworkers = CompanyFavorite.objects.filter(company=request.user.id)
+    return render(request, "work/favorite_worker.html", {'favoriteworkers': favoriteworkers})
+
+@login_required
+@company_required
+def favorite_worker_delete(request, favorite_worker_id):
+    """気になるを削除"""
+    favoriteworker = CompanyFavorite.objects.get(id=favorite_worker_id)
+    favoriteworker.delete()
+
+    favoriteworkers = CompanyFavorite.objects.filter(company=request.user.id)
+    return render(request, "work/favorite_worker.html", {'favoriteworkers': favoriteworkers})

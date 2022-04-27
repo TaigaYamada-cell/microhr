@@ -30,6 +30,12 @@
                 {% endfor %}
               </ul> 
             {% endwith %}
+          <h6>気になる登録者</h6>
+          {% with favorites=work.favorite_set.all %}
+              {% for favorite in favorites %}
+              <a href="{% url 'application_detail' favorite.user.id %}" class="me-5">{{ favorite.user }}</a>
+              {% endfor %}
+          {% endwith %}
         </div>
       </div>
     </div>
